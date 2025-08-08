@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  ollama-proxy:
+    build: .
+    container_name: ollama-turbo-proxy
+    ports:
+      - "8080:8080"
+    environment:
+      - FLASK_ENV=production
+      - OLLAMA_HOST=ollama.com
+    volumes:
+      # Mount SSH keys from host - REQUIRED for Ollama Turbo authentication
+      - ~/.ollama:/root/.ollama:ro
+    restart: unless-stopped
+    networks:
+      - ollama-net
+
+networks:
+  ollama-net:
+    driver: bridge
