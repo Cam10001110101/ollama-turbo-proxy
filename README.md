@@ -24,7 +24,7 @@ A lightweight proxy server that translates OpenAI API requests to Ollama CLI com
 1. Clone the repository:
 ```bash
 git clone <repository-url>
-cd openai-compatible-proxy
+cd ollama-turbo-proxy
 ```
 
 2. Install dependencies using UV:
@@ -165,7 +165,7 @@ curl -X POST http://localhost:8080/v1/chat/completions \
 
 ### Project Structure
 ```
-openai-compatible-proxy/
+ollama-turbo-proxy/
 ├── ollama_cli_proxy.py    # Main proxy server
 ├── docker-compose.yml      # Docker composition
 ├── Dockerfile             # Container definition

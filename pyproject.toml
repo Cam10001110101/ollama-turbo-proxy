@@ -1,5 +1,5 @@
 [project]
-name = "ollama-proxy"
+name = "ollama-turbo-proxy"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
