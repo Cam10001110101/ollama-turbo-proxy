@@ -27,17 +27,23 @@ git clone <repository-url>
 cd ollama-turbo-proxy
 ```
 
-2. Install dependencies using UV:
+2. Create and activate a virtual environment using UV:
+```bash
+uv venv
+source .venv/bin/activate
+```
+
+3. Install dependencies using UV:
 ```bash
 uv sync
 ```
 
 Or with pip:
 ```bash
-pip install -e .
+uv pip install -e .
 ```
 
-3. Ensure Ollama CLI is configured:
+4. Ensure Ollama CLI is configured:
 ```bash
 ollama --version
 OLLAMA_HOST=ollama.com ollama list
@@ -108,7 +114,7 @@ client = OpenAI(
 )
 
 response = client.chat.completions.create(
-    model="gpt-oss:20b",
+    model="gpt-oss:120b",
     messages=[
         {"role": "system", "content": "You are a helpful assistant."},
         {"role": "user", "content": "What is the capital of France?"}
@@ -123,22 +129,23 @@ print(response.choices[0].message.content)
 ### Environment Variables
 
 - `OLLAMA_HOST`: Set to `ollama.com` for Ollama Turbo (default)
+  - Configured in `ollama_cli_proxy.py:24` for local runs
+  - Configured in `docker-compose.yml` for Docker deployments
 - `FLASK_ENV`: Set to `production` for production deployments
-
-### Docker Volume Mounts
-
-The Docker configuration requires mounting your Ollama SSH keys:
-```yaml
-volumes:
-  - ~/.ollama:/root/.ollama:ro
-```
-
-This provides the container with read-only access to your Ollama authentication keys.
 
 ## Available Models
 
 - `gpt-oss:20b` - 20 billion parameter model
 - `gpt-oss:120b` - 120 billion parameter model
+- `kimi-k2:1t` - 1 trillion parameter Kimi K2 model
+- `qwen3-coder:480b` - 480 billion parameter Qwen3 coding model
+
+## Examples
+
+The `examples/` folder contains configuration examples for various integrations:
+
+- **opencode.jsonc**: OpenCode configuration for using the proxy with Ollama Turbo cloud models
+- **brave-browser-leo-config.png**: Screenshot showing how to configure Brave browser's Leo AI assistant to use the proxy
 
 ## Architecture
 
@@ -171,6 +178,9 @@ ollama-turbo-proxy/
 ├── Dockerfile             # Container definition
 ├── pyproject.toml         # Python package configuration
 ├── start-ollama-turbo.sh  # Helper startup script
+├── examples/              # Configuration examples
+│   ├── opencode.jsonc     # OpenCode configuration
+│   └── brave-browser-leo-config.png  # Browser integration example
 └── README.md              # This file
 ```
 
@@ -209,18 +219,3 @@ Adjust these in `ollama_cli_proxy.py` if needed for longer-running requests.
 - No API keys are stored in the code
 - All authentication is handled through Ollama's SSH mechanism
 - The proxy binds to `0.0.0.0:8080` - restrict access as needed in production
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## License
-
-[Specify your license here]
-
-## Support
-
-For issues or questions:
-- Check the [Troubleshooting](#troubleshooting) section
-- Open an issue on GitHub
-- Contact Ollama support for Turbo-specific issues

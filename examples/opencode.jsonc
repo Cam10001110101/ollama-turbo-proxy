@@ -1,0 +1,19 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "ollama-turbo": {
+      "name": "Ollama Turbo (via proxy)",
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "baseURL": "http://127.0.0.1:8080/v1"
+      },
+      "models": {
+        "gpt-oss:20b": { "name": "gpt-oss:20b" },
+        "gpt-oss:120b": { "name": "gpt-oss:120b" },
+        "kimi-k2:1t": { "name": "kimi-k2:1t" },
+        "qwen3-coder:480b": { "name": "qwen3-coder:480b" }
+      }
+    }
+  },
+  "mcp": {}
+}

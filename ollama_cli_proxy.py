@@ -235,14 +235,14 @@ if __name__ == '__main__':
     print("Proxy running at: http://localhost:8080")
     print("OpenAI endpoint: http://localhost:8080/v1/chat/completions")
     print("\nTesting Ollama CLI availability...")
-    
+
     # Test ollama
     result = subprocess.run(['ollama', '--version'], capture_output=True, text=True)
     if result.returncode == 0:
         print(f"✓ Ollama CLI available: {result.stdout.strip()}")
     else:
         print("✗ Ollama CLI not found!")
-    
+
     print("\nPress Ctrl+C to stop the server")
-    
+
     app.run(host='0.0.0.0', port=8080, debug=False)
